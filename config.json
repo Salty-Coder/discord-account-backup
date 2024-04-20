@@ -1,7 +1,7 @@
 {
     "backupDms": true,
     "dmBackupWhitelist": [],
-    "backupFullJson": false,
+    "backupFullJson": true,
 
     "backupGuilds": true,
     "backupGroupChats": true,
