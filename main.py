@@ -216,21 +216,18 @@ class Main:
         for id in ids:
             time.sleep(1)
             channelId = id 
-            print(str(id))
             response = self.session.get('https://discord.com/api/v9/channels/%s' % id).json()
-            print(response)
             try:
-                channelId = self.getChannel(id)
-                response = self.session.get('https://discord.com/api/v9/users/%s' % id).json()
-                username = response['username']
-                tag = '%s#%s' % (username, response['discriminator'])
-                fileName = username[:5].lower()
-                backupType = 'DM'
-            except:
-                channelId = id
+                recip2 = response['recipients'][1]   ## GC
                 tag = 'Group Chat'
                 fileName = 'gc'
                 backupType = 'GC'
+
+            except Exception:
+                backupType = 'DM'
+                username = response['recipients'][0]['username']
+                tag = username
+                fileName = username[:5].lower()
             cout('Started %s backup with: %s (ID: %s)' % (backupType, tag, id))
             pinsList = []
             attachmentsList = []
