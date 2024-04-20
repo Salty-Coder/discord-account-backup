@@ -207,11 +207,18 @@ class Main:
             ids = self.dmBackupWhitelist
         else:
             ids = []
-            for user in self.session.get('https://discord.com/api/v9/users/@me/relationships').json():
-                if user['type'] == 1 or user['type'] == 4:
-                    ids.append(int(user['id']))
+            dms = self.session.get('https://discordapp.com/api/users/@me/channels').json()
+            if dms: dms.pop(0)
+            for chat in dms:
+                ids.append(chat["id"])
+
+
         for id in ids:
             time.sleep(1)
+            channelId = id 
+            print(str(id))
+            response = self.session.get('https://discord.com/api/v9/channels/%s' % id).json()
+            print(response)
             try:
                 channelId = self.getChannel(id)
                 response = self.session.get('https://discord.com/api/v9/users/%s' % id).json()
